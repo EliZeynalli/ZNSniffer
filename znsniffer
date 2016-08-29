@@ -6,6 +6,11 @@ from struct import *
 os.system("reset")
 os.system("sudo \#sudo")
 os.system("reset")
+print """
+1) ENG command for English language
+2) TUR command for Turkish language
+3) AZE command for Azerbiajan Language
+"""
 select_lan=raw_input("\nselect language : ")
 os.system("reset")
 if select_lan == "ENG":
