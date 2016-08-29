@@ -6,235 +6,239 @@ from struct import *
 os.system("reset")
 os.system("sudo \#sudo")
 os.system("reset")
-print """
-1) ENG command for English language
-2) TUR command for Turkish language
-3) AZE command for Azerbiajan Language
-"""
-select_lan=raw_input("\nselect language : ")
-os.system("reset")
-if select_lan == "ENG":
-    
-    print "\nENGLISH selected !"
-    press=raw_input("\nPress enter key ...")
-    
-    def banner():
-
-            print """
-
-                    [+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+]
-                    [+]                                                [+]
-                    [+]             ZNSniffer version 1.0              [+]
-                    [+]                                                [+]
-                    [+]          http://facebook.com/zaurhlee          [+]
-                    [+]                                                [+]
-		    [+]         https://github.com/zaurhesenli         [+]
-                    [+]                                                [+]
-		    [+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+]
-
-            """
-
-    def press():
-
-            banner()
-
-    if os.name == "posix":
-        
-            os.system("reset")
-            press()
-            def sniff_en():
-                try:
-                        s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
-                except socket.error , msg:
-                        print 'Socket could not be created. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
-                        sys.exit()
-                while True:
-                        packet = s.recvfrom(65565)
-                        packet = packet[0]
-                        ip_header = packet[0:20]
-                        iph = unpack('!BBHHHBBH4s4s' , ip_header)
-                        version_ihl = iph[0]
-                        version = version_ihl >> 4
-                        ihl = version_ihl & 0xF
-                        iph_length = ihl * 4
-                        ttl = iph[5]
-                        protocol = iph[6]
-                        s_addr = socket.inet_ntoa(iph[8]);
-                        d_addr = socket.inet_ntoa(iph[9]);
-                        print '\nVersion : ' + str(version) + '\nIP Header Length : ' + str(ihl) + '\nTTL : ' + str(ttl) + '\nProtocol : ' + str(protocol)
-                        tcp_header = packet[iph_length:iph_length+20]
-                        tcph = unpack('!HHLLBBHHH' , tcp_header)
-                        source_port = tcph[0]
-                        dest_port = tcph[1]
-                        sequence = tcph[2]
-                        acknowledgement = tcph[3]
-                        doff_reserved = tcph[4]
-                        tcph_length = doff_reserved >> 4
-                        print 'Source Port : ' + str(source_port) + '\nDest Port : ' + str(dest_port) + '\nSequence Number : ' + str(sequence)
-                        h_size = iph_length + tcph_length * 4
-                        print "\n"
-
-            while True:
-                    print "\nTo start sniffing 'start' , enter the command\n"
-                    select=raw_input("\nZHDEV > ")
-                    
-                    if select == "start":
-                            sniff_en()
-                    elif select == "exit":
-                            os.system("reset")
-                            banner()
-                            print "\n"
-                            exit()
-            os.system("cls")
-            print "\nThis script for Linux. You are Windows user !"
-    if os.name == "mac":
-            os.system("clear")
-            print "\nThis script for Linux. You are Macintosh user !"
-
-elif select_lan == "TUR":
-        print "\nTürkçe seçildi !"
-        press=raw_input("\nEnter düğmesini basın ...")
-        def banner():
-
-            print """
-
-                    [+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+]
-                    [+]                                                [+]
-                    [+]             ZNSniffer version 1.0              [+]
-                    [+]                                                [+]
-                    [+]          http://facebook.com/zaurhlee          [+]
-                    [+]                                                [+]
-		    [+]         https://github.com/zaurhesenli         [+]
-                    [+]                                                [+]
-		    [+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+]
-
-            """
-        def press():
-
-                banner()
-
-        if os.name == "posix":
-                
-                os.system("reset")
-                press()
-                def sniff_tur():
-                    try:
-                            s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
-                    except socket.error , msg:
-                            print 'Soket yaratılamadı. Error kodu : ' + str(msg[0]) + ' Mesaj ' + msg[1]
-                            sys.exit()
-                    while True:
-                            packet = s.recvfrom(65565)
-                            packet = packet[0]
-                            ip_header = packet[0:20]
-                            iph = unpack('!BBHHHBBH4s4s' , ip_header)
-                            version_ihl = iph[0]
-                            version = version_ihl >> 4
-                            ihl = version_ihl & 0xF
-                            iph_length = ihl * 4
-                            ttl = iph[5]
-                            protocol = iph[6]
-                            s_addr = socket.inet_ntoa(iph[8]);
-                            d_addr = socket.inet_ntoa(iph[9]);
-                            print '\nVersion : ' + str(version) + '\nIP uzunluğu sayısı : ' + str(ihl) + '\nTTL : ' + str(ttl) + '\nProtoköl : ' + str(protocol)
-                            tcp_header = packet[iph_length:iph_length+20]
-                            tcph = unpack('!HHLLBBHHH' , tcp_header)
-                            source_port = tcph[0]
-                            dest_port = tcph[1]
-                            sequence = tcph[2]
-                            acknowledgement = tcph[3]
-                            doff_reserved = tcph[4]
-                            tcph_length = doff_reserved >> 4
-                            print 'Kaynak Port : ' + str(source_port) + '\nHedef Port : ' + str(dest_port) + '\nSıra Numarası : ' + str(sequence)
-                            h_size = iph_length + tcph_length * 4
-                            print "\n"
-
-                while True:
-                        print "\nSniffing Başlatmak için 'baslat' , komutunu giriniz\n"
-                        select=raw_input("\nZHDEV > ")
-                        if select == "baslat":
-                                sniff_tur()
-                        elif select == "cikis":
-                                os.system("reset")
-                                banner()
-                                print "\n"
-                                exit()
-        if os.name == "Windows":
-                os.system("cls")
-                print "\nBu script Linux için kodlanmış. Siz Windows kullanıcısısınız. !"
-        if os.name == "mac":
-                os.system("clear")
-                print "\nBu script Linux için kodlanmış. Siz Macintosh kullanıcısısınız. !"
-elif select_lan == "AZE":
-        print "\nAzərbaycanca seçildi !"
-        press=raw_input("\nEnter düyməsini basın ...")
-        def banner():
-            print """
-
-                    [+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+]
-                    [+]                                                [+]
-                    [+]             ZNSniffer version 1.0              [+]
-                    [+]                                                [+]
-                    [+]          http://facebook.com/zaurhlee          [+]
-                    [+]                                                [+]
-		    [+]         https://github.com/zaurhesenli         [+]
-                    [+]                                                [+]
-		    [+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+]
-
-            """
-        def press():
-
-                banner()
-
-        if os.name == "posix":
-            
-                os.system("reset")
-                press()
-                def sniff_tur():
-                    try:
-                            s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
-                    except socket.error , msg:
-                            print 'Soket yaradılmadı. Error kodu : ' + str(msg[0]) + ' Mesaj ' + msg[1]
-                            sys.exit()
-                    while True:
-                            packet = s.recvfrom(65565)
-                            packet = packet[0]
-                            ip_header = packet[0:20]
-                            iph = unpack('!BBHHHBBH4s4s' , ip_header)
-                            version_ihl = iph[0]
-                            version = version_ihl >> 4
-                            ihl = version_ihl & 0xF
-                            iph_length = ihl * 4
-                            ttl = iph[5]
-                            protocol = iph[6]
-                            s_addr = socket.inet_ntoa(iph[8]);
-                            d_addr = socket.inet_ntoa(iph[9]);
-                            print '\nVersiya : ' + str(version) + '\nIP uzunluğu sayı : ' + str(ihl) + '\nTTL : ' + str(ttl) + '\nProtokol : ' + str(protocol)
-                            tcp_header = packet[iph_length:iph_length+20]
-                            tcph = unpack('!HHLLBBHHH' , tcp_header)
-                            source_port = tcph[0]
-                            dest_port = tcph[1]
-                            sequence = tcph[2]
-                            acknowledgement = tcph[3]
-                            doff_reserved = tcph[4]
-                            tcph_length = doff_reserved >> 4
-                            print 'Qaynaq Port : ' + str(source_port) + '\nHədəf Port : ' + str(dest_port) + '\nSıra Nömrəsi : ' + str(sequence)
-                            h_size = iph_length + tcph_length * 4
-                            print "\n"
-
-                while True:
-                        print "\nSniffing Başlatmaq üçün 'basla' , əmrini yazın\n"
-                        select=raw_input("\nZHDEV > ")
-                        if select == "basla":
-                                sniff_tur()
-                        elif select == "cix":
-                                os.system("reset")
-                                banner()
-                                print "\n"
-                                exit()
-        if os.name == "Windows":
-                os.system("cls")
-                print "\nBu script Linux üçün kodlanıb. Siz Windows isdifadəçisisiniz. !"
-        if os.name == "mac":
-                os.system("clear")
-                print "\nBu script Linux üçün kodlanıb. Siz Macintosh isdifadəçisisiniz. !"
+while True:
+	print """
+	1) ENG command for English language
+	2) TUR command for Turkish language
+	3) AZE command for Azerbiajan Language
+	"""
+	select_lan=raw_input("\nselect language : ")
+	os.system("reset")
+	if select_lan == "ENG":
+	    
+	    print "\nENGLISH selected !"
+	    press=raw_input("\nPress enter key ...")
+	    
+	    def banner():
+	
+	            print """
+	
+	                    [+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+]
+	                    [+]                                                [+]
+	                    [+]             ZNSniffer version 1.0              [+]
+	                    [+]                                                [+]
+	                    [+]          http://facebook.com/zaurhlee          [+]
+	                    [+]                                                [+]
+			    [+]         https://github.com/zaurhesenli         [+]
+	                    [+]                                                [+]
+			    [+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+]
+	
+	            """
+	
+	    def press():
+	
+	            banner()
+	
+	    if os.name == "posix":
+	        
+	            os.system("reset")
+	            press()
+	            def sniff_en():
+	                try:
+	                        s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
+	                except socket.error , msg:
+	                        print 'Socket could not be created. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
+	                        sys.exit()
+	                while True:
+	                        packet = s.recvfrom(65565)
+	                        packet = packet[0]
+	                        ip_header = packet[0:20]
+	                        iph = unpack('!BBHHHBBH4s4s' , ip_header)
+	                        version_ihl = iph[0]
+	                        version = version_ihl >> 4
+	                        ihl = version_ihl & 0xF
+	                        iph_length = ihl * 4
+	                        ttl = iph[5]
+	                        protocol = iph[6]
+	                        s_addr = socket.inet_ntoa(iph[8]);
+	                        d_addr = socket.inet_ntoa(iph[9]);
+	                        print '\nVersion : ' + str(version) + '\nIP Header Length : ' + str(ihl) + '\nTTL : ' + str(ttl) + '\nProtocol : ' + str(protocol)
+	                        tcp_header = packet[iph_length:iph_length+20]
+	                        tcph = unpack('!HHLLBBHHH' , tcp_header)
+	                        source_port = tcph[0]
+	                        dest_port = tcph[1]
+	                        sequence = tcph[2]
+	                        acknowledgement = tcph[3]
+	                        doff_reserved = tcph[4]
+	                        tcph_length = doff_reserved >> 4
+	                        print 'Source Port : ' + str(source_port) + '\nDest Port : ' + str(dest_port) + '\nSequence Number : ' + str(sequence)
+	                        h_size = iph_length + tcph_length * 4
+	                        print "\n"
+	
+	            while True:
+	                    print "\nTo start sniffing 'start' , enter the command\n"
+	                    select=raw_input("\nZHDEV > ")
+	                    
+	                    if select == "start":
+	                            sniff_en()
+	                    elif select == "exit":
+	                            os.system("reset")
+	                            banner()
+	                            print "\n"
+	                            exit()
+	            os.system("cls")
+	            print "\nThis script for Linux. You are Windows user !"
+	    if os.name == "mac":
+	            os.system("clear")
+	            print "\nThis script for Linux. You are Macintosh user !"
+	
+	elif select_lan == "TUR":
+	        print "\nTürkçe seçildi !"
+	        press=raw_input("\nEnter düğmesini basın ...")
+	        def banner():
+	
+	            print """
+	
+	                    [+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+]
+	                    [+]                                                [+]
+	                    [+]             ZNSniffer version 1.0              [+]
+	                    [+]                                                [+]
+	                    [+]          http://facebook.com/zaurhlee          [+]
+	                    [+]                                                [+]
+			    [+]         https://github.com/zaurhesenli         [+]
+	                    [+]                                                [+]
+			    [+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+]
+	
+	            """
+	        def press():
+	
+	                banner()
+	
+	        if os.name == "posix":
+	                
+	                os.system("reset")
+	                press()
+	                def sniff_tur():
+	                    try:
+	                            s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
+	                    except socket.error , msg:
+	                            print 'Soket yaratılamadı. Error kodu : ' + str(msg[0]) + ' Mesaj ' + msg[1]
+	                            sys.exit()
+	                    while True:
+	                            packet = s.recvfrom(65565)
+	                            packet = packet[0]
+	                            ip_header = packet[0:20]
+	                            iph = unpack('!BBHHHBBH4s4s' , ip_header)
+	                            version_ihl = iph[0]
+	                            version = version_ihl >> 4
+	                            ihl = version_ihl & 0xF
+	                            iph_length = ihl * 4
+	                            ttl = iph[5]
+	                            protocol = iph[6]
+	                            s_addr = socket.inet_ntoa(iph[8]);
+	                            d_addr = socket.inet_ntoa(iph[9]);
+	                            print '\nVersion : ' + str(version) + '\nIP uzunluğu sayısı : ' + str(ihl) + '\nTTL : ' + str(ttl) + '\nProtoköl : ' + str(protocol)
+	                            tcp_header = packet[iph_length:iph_length+20]
+	                            tcph = unpack('!HHLLBBHHH' , tcp_header)
+	                            source_port = tcph[0]
+	                            dest_port = tcph[1]
+	                            sequence = tcph[2]
+	                            acknowledgement = tcph[3]
+	                            doff_reserved = tcph[4]
+	                            tcph_length = doff_reserved >> 4
+	                            print 'Kaynak Port : ' + str(source_port) + '\nHedef Port : ' + str(dest_port) + '\nSıra Numarası : ' + str(sequence)
+	                            h_size = iph_length + tcph_length * 4
+	                            print "\n"
+	
+	                while True:
+	                        print "\nSniffing Başlatmak için 'baslat' , komutunu giriniz\n"
+	                        select=raw_input("\nZHDEV > ")
+	                        if select == "baslat":
+	                                sniff_tur()
+	                        elif select == "cikis":
+	                                os.system("reset")
+	                                banner()
+	                                print "\n"
+	                                exit()
+	        if os.name == "Windows":
+	                os.system("cls")
+	                print "\nBu script Linux için kodlanmış. Siz Windows kullanıcısısınız. !"
+	        if os.name == "mac":
+	                os.system("clear")
+	                print "\nBu script Linux için kodlanmış. Siz Macintosh kullanıcısısınız. !"
+	elif select_lan == "AZE":
+	        print "\nAzərbaycanca seçildi !"
+	        press=raw_input("\nEnter düyməsini basın ...")
+	        def banner():
+	            print """
+	
+	                    [+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+]
+	                    [+]                                                [+]
+	                    [+]             ZNSniffer version 1.0              [+]
+	                    [+]                                                [+]
+	                    [+]          http://facebook.com/zaurhlee          [+]
+	                    [+]                                                [+]
+			    [+]         https://github.com/zaurhesenli         [+]
+	                    [+]                                                [+]
+			    [+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+][+]
+	
+	            """
+	        def press():
+	
+	                banner()
+	
+	        if os.name == "posix":
+	            
+	                os.system("reset")
+	                press()
+	                def sniff_tur():
+	                    try:
+	                            s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
+	                    except socket.error , msg:
+	                            print 'Soket yaradılmadı. Error kodu : ' + str(msg[0]) + ' Mesaj ' + msg[1]
+	                            sys.exit()
+	                    while True:
+	                            packet = s.recvfrom(65565)
+	                            packet = packet[0]
+	                            ip_header = packet[0:20]
+	                            iph = unpack('!BBHHHBBH4s4s' , ip_header)
+	                            version_ihl = iph[0]
+	                            version = version_ihl >> 4
+	                            ihl = version_ihl & 0xF
+	                            iph_length = ihl * 4
+	                            ttl = iph[5]
+	                            protocol = iph[6]
+	                            s_addr = socket.inet_ntoa(iph[8]);
+	                            d_addr = socket.inet_ntoa(iph[9]);
+	                            print '\nVersiya : ' + str(version) + '\nIP uzunluğu sayı : ' + str(ihl) + '\nTTL : ' + str(ttl) + '\nProtokol : ' + str(protocol)
+	                            tcp_header = packet[iph_length:iph_length+20]
+	                            tcph = unpack('!HHLLBBHHH' , tcp_header)
+	                            source_port = tcph[0]
+	                            dest_port = tcph[1]
+	                            sequence = tcph[2]
+	                            acknowledgement = tcph[3]
+	                            doff_reserved = tcph[4]
+	                            tcph_length = doff_reserved >> 4
+	                            print 'Qaynaq Port : ' + str(source_port) + '\nHədəf Port : ' + str(dest_port) + '\nSıra Nömrəsi : ' + str(sequence)
+	                            h_size = iph_length + tcph_length * 4
+	                            print "\n"
+	
+	                while True:
+	                        print "\nSniffing Başlatmaq üçün 'basla' , əmrini yazın\n"
+	                        select=raw_input("\nZHDEV > ")
+	                        if select == "basla":
+	                                sniff_tur()
+	                        elif select == "cix":
+	                                os.system("reset")
+	                                banner()
+	                                print "\n"
+	                                exit()
+	        if os.name == "Windows":
+	                os.system("cls")
+	                print "\nBu script Linux üçün kodlanıb. Siz Windows isdifadəçisisiniz. !"
+	        if os.name == "mac":
+	                os.system("clear")
+	                print "\nBu script Linux üçün kodlanıb. Siz Macintosh isdifadəçisisiniz. !"
+	else:
+		print "You don't select language. Tyr again"
+		press=raw_input("Press any key...")
