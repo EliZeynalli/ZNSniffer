@@ -5,8 +5,8 @@ import socket, sys
 from struct import *
 os.system("reset")
 os.system("sudo \#sudo")
-os.system("reset")
 while True:
+	os.system("reset")
 	print """
 	1) ENG command for English language
 	2) TUR command for Turkish language
